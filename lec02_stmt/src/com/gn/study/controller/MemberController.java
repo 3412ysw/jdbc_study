@@ -7,6 +7,15 @@ import com.gn.study.model.vo.Member;
 
 public class MemberController {
 	
+	
+	
+	public String searchId(String memderId) {
+		Member m = new Member();
+		//String result = new MemberDao();
+		return null;
+		
+	}
+	
 	public List<Member> selectMemberAll() {
 		List<Member> list = new MemberDao().selectMemberAll();
 		return list;

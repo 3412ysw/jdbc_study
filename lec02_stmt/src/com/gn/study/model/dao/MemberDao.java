@@ -11,7 +11,60 @@ import java.util.List;
 import com.gn.study.model.vo.Member;
 
 
+
 public class MemberDao {
+	
+	public String searchId(String memberId) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+	    String result = "";
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw ="tiger";
+			conn = DriverManager.getConnection(url, id, pw);
+			stmt = conn.createStatement();
+			
+			String sql =  "SELECT m_id"
+					+ " FROM `member`"
+					+ " WHERE m_id = " + memberId;
+			rs = stmt.executeQuery(sql);
+			Member M = new Member();
+			
+			if(rs.next()) {
+				Member m1 = new Member();
+				m1.setMemberNo(rs.getInt("m_no"));
+				m1.setMemberId(rs.getNString("m_id"));
+				m1.setMemberPw(rs.getNString("m_pw"));
+				m1.setMemberName(rs.getNString("m_name"));
+				m1.setMemberEmail(rs.getNString("m_email"));
+				m1.setMemberGender(rs.getNString("m_gender"));
+				m1.setMemberPhone(rs.getNString("m_phone"));
+				m1.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				m1.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+				}
+		    
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	
+	
+	}
+	
+	
+	
+	
 	
 	public List<Member> selectMemberAll() {
 		List<Member> list = new ArrayList<Member>();

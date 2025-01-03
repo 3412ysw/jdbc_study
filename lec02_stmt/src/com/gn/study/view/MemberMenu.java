@@ -32,7 +32,7 @@ public class MemberMenu {
 			case 0 : System.out.println("잘가요 안뇽"); return;
 			case 1 : createMember(); break;
 			case 2 : selectMemberAll(); break;
-			case 3 :
+			case 3 : searchId(); break;
 			case 4 :
 			case 5 :
 			case 6 :
@@ -40,6 +40,24 @@ public class MemberMenu {
 			}
 		}
 	}
+	
+	
+	// 아이디 검색
+	public void searchId() {
+		System.out.println("=== 회원 아이디 검색 ===");
+	    System.out.print("조회할 아이디 입력:");
+	    String memderId = sc.nextLine();
+//	    int result = mc.searchId(memderId);
+//	    if(memderId.equals(memderId)) {
+//	    	System.out.println("존재하는 아이디입니다.");
+//	    }else {
+//	    	System.out.println("존재하지 않는 아이디입니다.");
+//	    }
+	    
+	}
+	
+	
+	
 	
 	// 전체회원 조회
 	public void selectMemberAll() {
