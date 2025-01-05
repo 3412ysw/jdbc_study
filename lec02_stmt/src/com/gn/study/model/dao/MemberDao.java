@@ -14,26 +14,91 @@ import com.gn.study.model.vo.Member;
 
 public class MemberDao {
 	
-	public String searchId(String memberId) {
+	public int EditMember(String memberId ,String memberPw, String newPw) {
+		int result = 0;
 		Connection conn = null;
 		Statement stmt = null;
-		ResultSet rs = null;
-	    String result = "";
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
 			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
 			String id = "scott";
-			String pw ="tiger";
-			conn = DriverManager.getConnection(url, id, pw);
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
 			stmt = conn.createStatement();
 			
-			String sql =  "SELECT m_id"
-					+ " FROM `member`"
-					+ " WHERE m_id = " + memberId;
-			rs = stmt.executeQuery(sql);
-			Member M = new Member();
+			String sql = "UPDATE `member` "
+					+ "SET m_pw = '"+newPw+"' "
+					+ "WHERE m_id = '"+memberId+"' AND m_pw = '"+memberPw+"'";
+			 
+			result = stmt.executeUpdate(sql);
 			
-			if(rs.next()) {
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+		
+		return result;
+	}
+	
+	public int deleteMember(String memberId ,String memberPw) {
+		int result = 0;
+		Connection conn = null;
+		Statement stmt = null;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			
+			String sql = "DELETE FROM `member` "
+					+ "WHERE m_id = '"+ memberId +"' AND m_pw = '"+memberPw+"'";
+			 
+			result = stmt.executeUpdate(sql);
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
+	public List<Member> searchKeyWord(String memberName) {
+		List<Member> list = new ArrayList<Member>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			
+			String sql = "SELECT * FROM `member`"
+					+ "WHERE m_name LIKE '%" +memberName+"%'";
+			rs = stmt.executeQuery(sql);
+			
+			while(rs.next()) {
 				Member m1 = new Member();
 				m1.setMemberNo(rs.getInt("m_no"));
 				m1.setMemberId(rs.getNString("m_id"));
@@ -44,8 +109,53 @@ public class MemberDao {
 				m1.setMemberPhone(rs.getNString("m_phone"));
 				m1.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
 				m1.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
-				}
-		    
+				list.add(m1);
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return list;
+	}
+	
+	public Member searchId(String memberId) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+	    String result = "";
+	    Member m1 = new Member();
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw ="tiger";
+			conn = DriverManager.getConnection(url, id, pw);
+			stmt = conn.createStatement();
+			
+			String sql =  "SELECT *"
+					+ " FROM `member`"
+					+ " WHERE m_id = '" + memberId+"'";
+			rs = stmt.executeQuery(sql);
+		
+			if(rs.next()) {
+				m1.setMemberNo(rs.getInt("m_no"));
+				m1.setMemberId(rs.getNString("m_id"));
+				m1.setMemberPw(rs.getNString("m_pw"));
+				m1.setMemberName(rs.getNString("m_name"));
+				m1.setMemberEmail(rs.getNString("m_email"));
+				m1.setMemberGender(rs.getNString("m_gender"));
+				m1.setMemberPhone(rs.getNString("m_phone"));
+				m1.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				m1.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+			}else {
+				return null;
+			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -57,7 +167,7 @@ public class MemberDao {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return m1;
 	
 	
 	}

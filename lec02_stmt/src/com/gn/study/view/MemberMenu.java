@@ -33,13 +33,66 @@ public class MemberMenu {
 			case 1 : createMember(); break;
 			case 2 : selectMemberAll(); break;
 			case 3 : searchId(); break;
-			case 4 :
-			case 5 :
-			case 6 :
+			case 4 : searchKeyWord(); break;
+			case 5 : EditMember(); break;
+			case 6 : deleteMember(); break;
 			default : System.out.println("잘못된 번호에욤!");	
 			}
 		}
 	}
+	
+	// 회원 탈퇴
+	public void deleteMember() {
+		System.out.println("=== 회원 탈퇴 ===");
+		System.out.print("회원 아이디 입력 : ");
+		String memberId = sc.nextLine();
+		System.out.print("회원 비밀번호 입력 : ");
+		String memberPw = sc.nextLine();
+		int result = mc.deleteMember(memberId, memberPw);
+		if(result >0 ) {
+			System.out.println("회원 탈퇴에 성공하셨습니다.");
+		}else {
+			System.out.println("존재하지 않는 회원정보입니다.");
+		}
+		
+	}
+	
+	// 회원 정보 수정
+    public void EditMember() {
+    	System.out.println("=== 회원 정보 수정 ===");
+    	System.out.print("회원 아이디 입력 : ");
+		String memberId = sc.nextLine();
+		System.out.print("회원 비밀번호 입력 : ");
+		String memberPw = sc.nextLine();
+		System.out.print("수정할 비밀번호 입력 : ");
+		String newpw = sc.nextLine();
+		int result = mc.EditMember(memberId, memberPw, newpw);
+		if(result > 0) {
+			System.out.println("비밀번호 변경에 성공하셨습니다.");
+		}else {
+			System.out.println("존재하지 않는 회원정보입니다.");
+		}
+		
+		
+    }
+	
+	
+	// 회원 이름으로 키워드 검색
+	public void searchKeyWord() {
+		System.out.println("=== 회원 이름으로 키워드 검색 ===");
+		System.out.print("회원 이름 키워드 :");
+		String membername = sc.nextLine();
+		List<Member> list = mc.searchKeyWord(membername);
+		if(list.isEmpty()) {
+			System.out.println("조회된 결과가 없습니다.");
+		}else {
+			for(Member m : list) {
+				System.out.println(m);
+			}
+		}
+		
+	}
+	
 	
 	
 	// 아이디 검색
@@ -47,12 +100,12 @@ public class MemberMenu {
 		System.out.println("=== 회원 아이디 검색 ===");
 	    System.out.print("조회할 아이디 입력:");
 	    String memderId = sc.nextLine();
-//	    int result = mc.searchId(memderId);
-//	    if(memderId.equals(memderId)) {
-//	    	System.out.println("존재하는 아이디입니다.");
-//	    }else {
-//	    	System.out.println("존재하지 않는 아이디입니다.");
-//	    }
+	    Member m1 = mc.searchId(memderId);
+	    if(m1 != null) {
+	    	System.out.println(m1);
+	    }else {
+	    	System.out.println("존재하지 않는 아이디입니다.");
+	    }
 	    
 	}
 	

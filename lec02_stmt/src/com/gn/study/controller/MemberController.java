@@ -7,12 +7,29 @@ import com.gn.study.model.vo.Member;
 
 public class MemberController {
 	
+	public int EditMember(String memberId, String memberPw, String newPw) {
+		int result  = new MemberDao().EditMember(memberId, memberPw , newPw);
+		return result;
+	}
 	
+	public int deleteMember(String memberId, String memberPw) {
+		
+		int result = new MemberDao().deleteMember(memberId, memberPw);
+		return result;
+		
+	}
 	
-	public String searchId(String memderId) {
+	public List<Member> searchKeyWord(String memberName) {
 		Member m = new Member();
-		//String result = new MemberDao();
-		return null;
+		List<Member> list = new MemberDao().searchKeyWord(memberName);
+		return list;
+	}
+	
+	
+	public Member searchId(String memderId) {
+		Member m = new Member();
+		Member result = new MemberDao().searchId(memderId);
+		return result;
 		
 	}
 	
