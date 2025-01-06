@@ -7,8 +7,14 @@ import com.gn.study.model.vo.Member;
 
 public class MemberController {
 	
-	public int EditMember(String memberId, String memberPw, String newPw) {
-		int result  = new MemberDao().EditMember(memberId, memberPw , newPw);
+	
+	public Member checkmember(String memberId, String memberPw) {
+		Member result  = new MemberDao().checkmember(memberId, memberPw);
+		return result;
+	}
+	
+	public int EditMember(String newName, String newPhone, String newMail,String memberId) {
+		int result  = new MemberDao().EditMember(newName, newPhone , newMail, memberId );
 		return result;
 	}
 	

@@ -14,7 +14,51 @@ import com.gn.study.model.vo.Member;
 
 public class MemberDao {
 	
-	public int EditMember(String memberId ,String memberPw, String newPw) {
+	public Member checkmember(String memberId ,String memberPw) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+	    Member m1 = new Member();
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/jdbc_basic";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			
+			String sql = "SELECT *FROM `member` "
+					+ "    WHERE m_id = '"+memberId+"' AND m_pw = '"+memberPw+"' ";
+			 
+			rs = stmt.executeQuery(sql);
+			if(rs.next()) {
+				m1.setMemberNo(rs.getInt("m_no"));
+				m1.setMemberId(rs.getNString("m_id"));
+				m1.setMemberPw(rs.getNString("m_pw"));
+				m1.setMemberName(rs.getNString("m_name"));
+				m1.setMemberEmail(rs.getNString("m_email"));
+				m1.setMemberGender(rs.getNString("m_gender"));
+				m1.setMemberPhone(rs.getNString("m_phone"));
+				m1.setRegDate(rs.getTimestamp("reg_date").toLocalDateTime());
+				m1.setModDate(rs.getTimestamp("mod_date").toLocalDateTime());
+			}else {
+				return null;
+			}
+			
+		}catch(Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+				conn.close();
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return m1;
+	}
+	
+	public int EditMember(String newName ,String newPhone, String newMail,String memberId) {
 		int result = 0;
 		Connection conn = null;
 		Statement stmt = null;
@@ -26,9 +70,11 @@ public class MemberDao {
 			conn = DriverManager.getConnection(url,id,pw);
 			stmt = conn.createStatement();
 			
-			String sql = "UPDATE `member` "
-					+ "SET m_pw = '"+newPw+"' "
-					+ "WHERE m_id = '"+memberId+"' AND m_pw = '"+memberPw+"'";
+			String sql = "UPDATE `member`"
+					+ "    SET m_name = '"+newName+"'"
+					+ "	 , m_phone = '"+newPhone+"'"
+					+ "	 ,m_email = '"+newMail+"'"
+					+ "    WHERE m_id = '"+memberId+"'";
 			 
 			result = stmt.executeUpdate(sql);
 			
@@ -128,7 +174,6 @@ public class MemberDao {
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
-	    String result = "";
 	    Member m1 = new Member();
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");

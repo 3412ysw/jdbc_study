@@ -48,12 +48,19 @@ public class MemberMenu {
 		String memberId = sc.nextLine();
 		System.out.print("회원 비밀번호 입력 : ");
 		String memberPw = sc.nextLine();
-		int result = mc.deleteMember(memberId, memberPw);
-		if(result >0 ) {
-			System.out.println("회원 탈퇴에 성공하셨습니다.");
-		}else {
-			System.out.println("존재하지 않는 회원정보입니다.");
-		}
+		Member result1 = mc.checkmember(memberId, memberPw);
+		 if(result1 != null) {
+			 	int result2 = mc.deleteMember(memberId, memberPw);
+			 	if(result2 >0) {
+			 		System.out.println("회원탈퇴에 성공하셨습니다.");
+			 	}else {
+			 		System.out.println("실패 ,,");
+			 	}
+		    	
+		    }else {
+		    	System.out.println("존재하지 않는 아이디입니다.");
+		    }
+	
 		
 	}
 	
@@ -64,14 +71,25 @@ public class MemberMenu {
 		String memberId = sc.nextLine();
 		System.out.print("회원 비밀번호 입력 : ");
 		String memberPw = sc.nextLine();
-		System.out.print("수정할 비밀번호 입력 : ");
-		String newpw = sc.nextLine();
-		int result = mc.EditMember(memberId, memberPw, newpw);
-		if(result > 0) {
-			System.out.println("비밀번호 변경에 성공하셨습니다.");
-		}else {
-			System.out.println("존재하지 않는 회원정보입니다.");
-		}
+		Member result1 = mc.checkmember(memberId, memberPw);
+		 if(result1 != null) {
+			 	System.out.print("수정할 이름 입력 : ");
+			 	String newName = sc.nextLine();
+			 	System.out.print("수정할 전화번호 입력 : ");
+			 	String newPhone = sc.nextLine();
+			 	System.out.print("수정할 이메일 입력 : ");
+			 	String newMail = sc.nextLine();
+			 	int result2 = mc.EditMember(newName, newPhone, newMail, memberId);
+			 	if(result2 >0) {
+			 		System.out.println("회원정보가 변경되었습니다.");
+			 	}else {
+			 		System.out.println("실패 ,,");
+			 	}
+		    	
+		    }else {
+		    	System.out.println("존재하지 않는 아이디입니다.");
+		    }
+	
 		
 		
     }
