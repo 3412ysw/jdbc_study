@@ -1,5 +1,7 @@
 package com.gn.homework.controller;
 
+import java.util.List;
+
 import com.gn.homework.model.dao.Dao;
 import com.gn.homework.model.vo.Member;
 
@@ -23,7 +25,26 @@ public class Controller {
 		return result;
 	}
 	
+	public List<Member> musicPlay(){
+		List<Member> list = new Dao().musicPlay();
+		return list;
+	}
 	
+	public int musicCount(int num) {
+		int result = new Dao().musicCount(num);
+		return result;
+	}
+	
+	public int editUser(String newName,String memberid) {
+		int result = new Dao().editUser(newName,memberid);
+		return result;
+	}
+	
+	
+	public int deleteUser(String memberid) {
+		int result = new Dao().deleteUser(memberid);
+		return result;
+	}
 	
 	
 }

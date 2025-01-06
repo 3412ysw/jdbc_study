@@ -12,7 +12,9 @@ public class Member {
 	private int musicNo;
 	private String musicTitle;
 	private String musicArtist;
+	private int musicCount;
 	
+
 	public Member() {}
 
 	public Member(String memberId, String memberPw, String memberName) {
@@ -92,9 +94,17 @@ public class Member {
 		this.musicArtist = musicArtist;
 	}
 
+	public int getMusicCount() {
+		return musicCount;
+	}
+	
+	public void setMusicCount(int musicCount) {
+		this.musicCount = musicCount;
+	}
+	
 	@Override
 	public String toString() {
-		return "[음원 번호 =" + musicNo + ", 음원 제목 =" + musicTitle + ", 음원 아티스트 =" + musicArtist + "]";
+		return "[음원 번호 :" + musicNo + ", 음원 제목 :" + musicTitle + ", 음원 아티스트 :" + musicArtist + ", 재생횟수 :"+musicCount+"]";
 	}
 	
 	

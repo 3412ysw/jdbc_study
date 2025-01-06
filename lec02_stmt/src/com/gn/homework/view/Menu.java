@@ -1,9 +1,9 @@
 package com.gn.homework.view;
 
+import java.util.List;
 import java.util.Scanner;
 
 import com.gn.homework.controller.Controller;
-import com.gn.homework.model.dao.Dao;
 import com.gn.homework.model.vo.Member;
 
 public class Menu {
@@ -73,7 +73,7 @@ public class Menu {
 		sc.nextLine();
 		switch(menu) {   
 			case 1 : insertMusic(); break;
-			case 2 : break;
+			case 2 : selectTopten(); break;
 			default : System.out.println("잘못된 번호 입니다.");	
 		}
 		
@@ -87,10 +87,11 @@ public class Menu {
 		System.out.println("3. 회원 탈퇴");
 		System.out.print("메뉴 : ");
 		int menu = sc.nextInt();
+		sc.nextLine();
 		switch(menu) {   
-			case 1 : break;
-			case 2 : break;
-			case 3 : break;
+			case 1 : musicPlay(); break;
+			case 2 : editUser(); break;
+			case 3 : deleteUser(); break;
 			default : System.out.println("잘못된 번호 입니다.");	
 		}
 	}
@@ -108,6 +109,73 @@ public class Menu {
 	    	System.out.println("음원 추가에 실패하였습니다.");
 	    }
 		
+	}
+	
+	public void selectTopten() {
+		System.out.println("=== 인기 차트 ~!! ===");
+		
+	}
+	
+	public void musicPlay() {
+		System.out.println("=== 음악 재생 ===");
+		System.out.println("=== 전체 음악 목록 ===");
+		List<Member> list = c.musicPlay();
+		if(list.isEmpty()) {
+			System.out.println("조회된 결과가 없습니다.");
+		}else {
+			for(Member m : list) {
+				System.out.println(m);
+			}
+			System.out.print("재생할 음악의 번호를 선택하세요 :");
+			int num = sc.nextInt();
+			int result = c.musicCount(num);
+			if(result > 0) {
+				System.out.println("노래 듣는 듕"); 
+			}else {
+				System.out.println("실패염");
+			}
+			
+		}
+	}
+	
+	public void editUser() {
+		System.out.println("=== 회원 이름 변경 ===");
+		System.out.print("아이디 입력 : ");
+		String memberId = sc.nextLine();
+		System.out.print("비밀번호 입력 : ");
+		String memberPw = sc.nextLine();
+		Member result = c.login(memberId, memberPw);
+	    if(result != null) {
+	    	System.out.print("변경할 이름 입력 : ");
+	    	String newName = sc.nextLine();
+	    	int result2 = c.editUser(newName, memberId);
+	    	if(result2>0) {
+	    		System.out.println("이름 변경 완료");
+	    	}else {
+	    		System.out.println("이름 변경 실패");
+	    	}
+	    }else {
+	    	System.out.println("로그인 실패");
+	    }
+	}
+	
+	public void deleteUser() {
+		System.out.println("=== 회원 탈퇴 ===");
+		System.out.print("아이디 입력 : ");
+		String memberId = sc.nextLine();
+		System.out.print("비밀번호 입력 : ");
+		String memberPw = sc.nextLine();
+		Member result = c.login(memberId, memberPw);
+	    if(result != null) {
+	    	int result2 = c.deleteUser(memberId);
+	    	if(result2>0) {
+	    		System.out.println("탈퇴 성공");
+	    	}else {
+	    		System.out.println("탈퇴 실패");
+	    	}
+	    }else {
+	    	System.out.println("로그인 실패");
+	    }
 	}
 	
 	
