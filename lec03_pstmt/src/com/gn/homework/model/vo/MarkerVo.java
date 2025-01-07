@@ -1,15 +1,21 @@
 package com.gn.homework.model.vo;
 
+
+import java.time.LocalDateTime;
+
 public class MarkerVo {
 	
 	private int userNo;
 	private String userId;
 	private String userPw;
 	private String userName;
+	private LocalDateTime userRegdate;
+	private LocalDateTime userModdate;
 	private int productNo;
 	private String productName;
 	private String productPrice;
 	private int productAmount;
+	
 	
 	public MarkerVo() {}
 
@@ -55,6 +61,23 @@ public class MarkerVo {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	
+	public LocalDateTime getUserRegdate() {
+		return userRegdate;
+	}
+
+	public void setUserRegdate(LocalDateTime userRegdate) {
+		this.userRegdate = userRegdate;
+	}
+
+	public LocalDateTime getUserModdate() {
+		return userModdate;
+	}
+
+	public void setUserModdate(LocalDateTime userModdate) {
+		this.userModdate = userModdate;
 	}
 
 	public int getProductNo() {
