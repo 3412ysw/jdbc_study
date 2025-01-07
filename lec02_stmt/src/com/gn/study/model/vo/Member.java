@@ -41,6 +41,8 @@ public class Member {
 		this.regDate = regDate;
 		this.modDate = modDate;
 	}
+	
+	
 
 
 	public int getMemberNo() {

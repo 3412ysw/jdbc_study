@@ -42,6 +42,7 @@ public class Dao {
 	}
 	
 	
+	
 	public Member login(String memberId ,String memberPw) {
 		Connection conn = null;
 		Statement stmt = null;
@@ -111,11 +112,52 @@ public class Dao {
 		return result;
 	}
 	
+	public List<Member> selectTopten(){
+		List<Member> list = new ArrayList<Member>();
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		
+		try {
+			Class.forName("org.mariadb.jdbc.Driver");
+			String url = "jdbc:mariadb://127.0.0.1:3306/watermelon_music";
+			String id = "scott";
+			String pw = "tiger";
+			conn = DriverManager.getConnection(url,id,pw);
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("SELECT * FROM wm_song "
+					+ "ORDER BY s_count DESC "
+					+ "LIMIT 10;");
+		
+			while(rs.next()) {
+				Member m = new Member();
+				m.setMusicNo(rs.getInt("s_no"));
+				m.setMusicTitle(rs.getNString("s_title"));
+				m.setMusicArtist(rs.getNString("s_artist"));
+				m.setMusicCount(rs.getInt("s_count"));
+				list.add(m);
+			}
+				
+		} catch (ClassNotFoundException e ) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				stmt.close();
+				conn.close();
+			}catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return list;
+	}
+	
 	public List<Member> musicPlay(){
 		
 		List<Member> list = new ArrayList<Member>();
-		// 전체 member 정보 조회 -> List<Member> 형태로 리턴
-		// DB에 SQL문 요청
 		Connection conn = null;
 		Statement stmt = null;
 		ResultSet rs = null;
@@ -128,7 +170,7 @@ public class Dao {
 			conn = DriverManager.getConnection(url,id,pw);
 			stmt = conn.createStatement();
 			rs = stmt.executeQuery("SELECT * FROM wm_song");
-			
+		
 			while(rs.next()) {
 				Member m = new Member();
 				m.setMusicNo(rs.getInt("s_no"));

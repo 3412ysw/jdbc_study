@@ -113,7 +113,15 @@ public class Menu {
 	
 	public void selectTopten() {
 		System.out.println("=== 인기 차트 ~!! ===");
-		
+		List<Member> list = c.selectTopten();
+	
+		if(list.isEmpty()) {
+			System.out.println("조회된 결과가 없습니다.");
+		}else {
+			for(Member m : list) {
+				System.out.println(m);
+			}
+		}
 	}
 	
 	public void musicPlay() {

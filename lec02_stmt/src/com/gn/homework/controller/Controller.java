@@ -25,6 +25,11 @@ public class Controller {
 		return result;
 	}
 	
+	public List<Member> selectTopten(){
+		List<Member> list = new Dao().selectTopten();
+		return list;
+	}
+	
 	public List<Member> musicPlay(){
 		List<Member> list = new Dao().musicPlay();
 		return list;
