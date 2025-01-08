@@ -1,5 +1,8 @@
 package com.gn.study.controller;
 
+import java.util.List;
+
+import com.gn.study.model.dao.Dao;
 import com.gn.study.model.service.Service;
 import com.gn.study.model.vo.Car;
 
@@ -13,7 +16,25 @@ public class Controller {
 		return result;
 	}
 	
+	public List<Car> selectCarAll(){
+		return service.selectCarAll();
+	}
 	
+	public Car selectCarOne(String modelName) {
+		Car result = service.selectCarOne(modelName);
+		return result;
+	}
 	
+	public List<Car> searchCarName(int menu,Object obj){
+		return service.searchCarName(menu,obj);
+		
+	}
 	
+	public int updateCarOne(int carNo, String modelName) {
+		return service.updateCarOne(carNo, modelName);
+	}
+	
+	public int deleteCarOne(int carNo) {
+		return service.deleteCarOne(carNo);
+	}
 }
