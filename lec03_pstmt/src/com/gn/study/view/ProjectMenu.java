@@ -61,7 +61,7 @@ public class ProjectMenu {
 	
 	public void printProjectResult(int result, String menuName) {
 		if(result > 0) {
-			System.out.println(menuName + "이 정상적으로 완료되었습니다.");
+			System.out.println(menuName + "이(가) 정상적으로 완료되었습니다.");
 		}else {
 			System.out.println(menuName+ "중 오류가 발생했습니다.");
 		}

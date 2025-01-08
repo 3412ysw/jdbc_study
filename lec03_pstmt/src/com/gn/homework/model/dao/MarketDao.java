@@ -2,6 +2,7 @@ package com.gn.homework.model.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
@@ -14,7 +15,7 @@ public class MarketDao {
 	public MarkerVo checkId(String userId) {
 		MarkerVo mv = new MarkerVo();
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		try {
 			Class.forName("org.mariadb.jdbc.Driver");
@@ -22,12 +23,12 @@ public class MarketDao {
 			String id = "scott";
 			String pw = "tiger";
 			conn = DriverManager.getConnection(url,id,pw);
-			stmt = conn.createStatement();
 			
 			String sql = "SELECT * FROM sm_user "
 						+"WHERE u_id = ? ";
 			 
-			rs = stmt.executeQuery(sql);
+			pstmt =  conn.prepareStatement(sql);
+			rs = pstmt.executeQuery(sql);
 			if(rs.next()) {
 				mv.setUserNo(rs.getInt("u_no"));
 				mv.setUserId(rs.getString("u_id"));
@@ -43,7 +44,7 @@ public class MarketDao {
 			e.printStackTrace();
 		}finally {
 			try {
-				stmt.close();
+				pstmt.close();
 				conn.close();
 			}catch(Exception e) {
 				e.printStackTrace();
