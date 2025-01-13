@@ -25,7 +25,7 @@ public class MarketDao {
 			conn = DriverManager.getConnection(url,id,pw);
 			
 			String sql = "SELECT * FROM sm_user "
-						+"WHERE u_id = ? ";
+						+"WHERE u_id= ?  ";
 			 
 			pstmt =  conn.prepareStatement(sql);
 			rs = pstmt.executeQuery(sql);
